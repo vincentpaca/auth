@@ -1,0 +1,17 @@
+#OS Files
+Thumbs.db
+
+#Pckgs
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+#Compiled Source
+*.exe
+hi5-auth/obj/Debug/*
+hi5-auth/bin/*

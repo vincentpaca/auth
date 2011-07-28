@@ -4,6 +4,17 @@
 
 <h2>@ViewBag.Message</h2>
 <p>
-    this is a demo webpage using native login/logout, authentication via Facebook OAuth
-    and also provide API keys to third party applications to connect to this app.
+    @if (Request.IsAuthenticated)
+    {
+        <text>
+            If you are seeing this text, this means that you are successfully logged in!
+        </text>
+    
+    }
+    else
+    {
+        <text>
+            You are not logged in.
+        </text>
+    }
 </p>

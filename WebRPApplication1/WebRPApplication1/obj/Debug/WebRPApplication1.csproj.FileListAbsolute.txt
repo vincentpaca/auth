@@ -1,0 +1,13 @@
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\bin\WebRPApplication1.dll
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\bin\WebRPApplication1.pdb
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\bin\DotNetOpenAuth.dll
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\bin\log4net.dll
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\bin\RelyingPartyLogic.dll
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\bin\RelyingPartyLogic.pdb
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\bin\DotNetOpenAuth.pdb
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\bin\DotNetOpenAuth.xml
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\bin\log4net.xml
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\bin\sr\DotNetOpenAuth.resources.dll
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\obj\Debug\WebRPApplication1.dll
+C:\Users\pax\my_projects\hi5-auth\WebRPApplication1\WebRPApplication1\obj\Debug\WebRPApplication1.pdb

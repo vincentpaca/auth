@@ -10,6 +10,7 @@ namespace hi5_auth.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Message = "Welcome!";
             return View();
         }
 

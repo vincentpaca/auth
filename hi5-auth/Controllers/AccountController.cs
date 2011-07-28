@@ -205,7 +205,6 @@ namespace hi5_auth.Controllers
             }
             else
             {
-                
                 ModelState.AddModelError("", ErrorCodeToString(createStatus));
                 return RedirectToAction("LogOn", "Account");
             }

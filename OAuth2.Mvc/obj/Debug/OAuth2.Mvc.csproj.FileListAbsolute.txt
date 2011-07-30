@@ -1,0 +1,6 @@
+C:\Users\Rachelle\projects\auth\OAuth2.Mvc\bin\Debug\OAuth2.Mvc.dll
+C:\Users\Rachelle\projects\auth\OAuth2.Mvc\bin\Debug\OAuth2.Mvc.pdb
+C:\Users\Rachelle\projects\auth\OAuth2.Mvc\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Rachelle\projects\auth\OAuth2.Mvc\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Rachelle\projects\auth\OAuth2.Mvc\obj\Debug\OAuth2.Mvc.dll
+C:\Users\Rachelle\projects\auth\OAuth2.Mvc\obj\Debug\OAuth2.Mvc.pdb

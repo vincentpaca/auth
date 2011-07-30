@@ -18,5 +18,11 @@ namespace hi5_auth.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        public ActionResult Secured()
+        {
+            return View();
+        }
     }
 }

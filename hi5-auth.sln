@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hi5-auth", "hi5-auth\hi5-auth.csproj", "{BD49AA00-92C6-4F37-8A14-9CA8E85709D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuth2.Mvc", "OAuth2.Mvc\OAuth2.Mvc.csproj", "{F4E72DA8-129E-4872-B6AC-4D9CFCDF91A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{BD49AA00-92C6-4F37-8A14-9CA8E85709D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD49AA00-92C6-4F37-8A14-9CA8E85709D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD49AA00-92C6-4F37-8A14-9CA8E85709D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4E72DA8-129E-4872-B6AC-4D9CFCDF91A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4E72DA8-129E-4872-B6AC-4D9CFCDF91A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4E72DA8-129E-4872-B6AC-4D9CFCDF91A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4E72DA8-129E-4872-B6AC-4D9CFCDF91A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

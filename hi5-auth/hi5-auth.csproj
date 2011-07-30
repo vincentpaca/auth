@@ -67,10 +67,20 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OAuthController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Json\HttpRequestExtensions.cs" />
+    <Compile Include="Json\JsonHelper.cs" />
+    <Compile Include="Json\JsonpResult.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\JsonResponse.cs" />
+    <Compile Include="OAuth\Identity.cs" />
+    <Compile Include="OAuth\Principal.cs" />
+    <Compile Include="OAuth\Provider.cs" />
+    <Compile Include="OAuth\Service.cs" />
+    <Compile Include="OAuth\Token.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +160,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Handshake.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OAuth2.Mvc\OAuth2.Mvc.csproj">
+      <Project>{F4E72DA8-129E-4872-B6AC-4D9CFCDF91A8}</Project>
+      <Name>OAuth2.Mvc</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Secured.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

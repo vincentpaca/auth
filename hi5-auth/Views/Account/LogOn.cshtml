@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Log On";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Log On</h2>
@@ -45,6 +46,8 @@
                 @Html.CheckBoxFor(m => m.RememberMe)
                 @Html.LabelFor(m => m.RememberMe)
             </div>
+
+			@Html.HiddenFor(m => m.RequestToken)
 
             <p>
                 <input type="submit" value="Log On" />

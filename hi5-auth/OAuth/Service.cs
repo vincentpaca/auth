@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using OAuth2.Mvc;
+using MySql.Data.MySqlClient;
 
 namespace hi5_auth.OAuth
 {
@@ -35,11 +36,26 @@ namespace hi5_auth.OAuth
         public override OAuthResponse AccessToken(string requestToken, string grantType, string userName, string password, bool persistent)
         {
             // This should go out to a DB and get the users saved information.
-            var hash = (requestToken + userName).ToSHA1();
-
-            if (hash.Equals(password, StringComparison.OrdinalIgnoreCase))
-                return CreateAccessToken(userName);
-
+            //var hash = (requestToken + userName).ToSHA1();
+            MySqlConnection _con = new MySqlConnection("server=localhost;user id=root;password=imba;database=hi5;port=3307;");
+            try {
+                _con.Open();
+                MySqlCommand _command = new MySqlCommand("call spGetAccessToken('" + requestToken + "','" + userName + "')", _con);
+                string hash = "";
+                try
+                {
+                    hash = _command.ExecuteScalar().ToString();
+                }
+                catch { }
+                if (hash.Equals(password, StringComparison.OrdinalIgnoreCase) && !String.IsNullOrEmpty(password))
+                    return CreateAccessToken(userName);
+            }catch(Exception ex)
+            {
+                throw ex;
+            }finally
+            {
+                _con.Close();
+            }
             return new OAuthResponse
             {
                 Success = false

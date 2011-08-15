@@ -16,16 +16,16 @@ namespace hi5_auth.Controllers
         public ActionResult RequestToken()
         {
             var response = OAuthServiceBase.Instance.RequestToken();
-
+            //return Content("http://localhost/hi5/oauth/accesstoken?grant_type=admin&username=username_here&password=password_here&persistent=true&token=" + response.RequestToken);
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
-        public ActionResult AccessToken(string grant_type, string username, string password, bool? persistent)
+        public ActionResult AccessToken(string grant_type, string username, string password, bool? persistent, string token)
         {
-            var requestToken = Request.GetToken();
-            var response = OAuthServiceBase.Instance.AccessToken(requestToken, grant_type, username, password, persistent.HasValue && persistent.Value);
-
+            //var requestToken = Request.GetToken();
+            var response = OAuthServiceBase.Instance.AccessToken(token, grant_type, username, password, persistent.HasValue && persistent.Value);
+            
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 

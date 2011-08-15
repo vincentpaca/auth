@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <label>Username:</label><input type="text" id="username"/>
+</p>
+<p>
+    <label>Password:</label><input type="text" id="password" />
+</p>
+<p>
+    <label>Request Token:</label><input type="text" id="requesttoken" />
+</p>
+<p>
+    <label>Access Token:</label><input type="text" id="accesstoken" />
+</p>
+<p>
+    <label>Refresh Token:</label><input type="text" id="refreshtoken" />
+</p>
+<p>
+    <label>Success:</label><input type="text" id="success" />
+</p>
+<p>
+    <input type="button" value="Request Token" onclick="request()" />
+    <input type="button" value="Access Token" onclick="access()"/>
+    <input type="button" value="Refresh Token" onclick="refresh()"/>
+</p>
+
+<script type="text/javascript">
+    function request() {
+
+        var url = location.href.toLowerCase().replace("access", "OAuth") + '/requesttoken';
+        
+        $.getJSON(url, function (data) {
+            document.getElementById('requesttoken').value = data['RequestToken'];
+            document.getElementById('success').value = data['Success'];
+        });
+    }
+
+    function access() {
+        var url = location.href.toLowerCase().replace("access", "OAuth") + '/accesstoken?grant_type=admin&username=' + document.getElementById('username').value + '&password=' + document.getElementById('password').value + '&persistent=true&token=' + document.getElementById('requesttoken').value;
+        
+        $.getJSON( url, function (data) {
+            document.getElementById('accesstoken').value = data['AccessToken'];
+            document.getElementById('refreshtoken').value = data['RefreshToken'];
+            document.getElementById('success').value = data['Success'];
+        });
+    }
+
+    function refresh() {
+        var url = location.href.toLowerCase().replace("access", "OAuth") + '/refreshtoken?refreshToken=' + document.getElementById('refreshtoken').value;
+        $.getJSON(url, function (data) {
+            document.getElementById('accesstoken').value = data['AccessToken'];
+            document.getElementById('refreshtoken').value = data['RefreshToken'];
+            document.getElementById('success').value = data['Success'];
+        });
+    }
+</script>

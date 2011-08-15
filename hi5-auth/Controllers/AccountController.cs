@@ -6,9 +6,11 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using hi5_auth.Models;
-
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json.Linq;
 using System.Net;
+
+using OAuth2.Mvc;
 
 namespace hi5_auth.Controllers
 {
@@ -27,17 +29,42 @@ namespace hi5_auth.Controllers
         // POST: /Account/LogOn
 
         [HttpPost]
-        public ActionResult LogOn(LogOnModel model, string returnUrl)
+        public ActionResult LogOn(string requestToken, LogOnModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                var accessResponse = OAuthServiceBase.Instance.AccessToken(requestToken, "User", model.UserName, model.Password, true);
+                MySqlConnection _con = new MySqlConnection("server=localhost;user id=root;password=imba;database=hi5;port=3307;");
+                string error = "";
+                string username = "";
+                try
+                {
+                    _con.Open();
+                    MySqlCommand _command = new MySqlCommand("call spLogin('" + model.UserName + "','" + model.Password + "')", _con);
+
+                    try
+                    {
+                        username = _command.ExecuteScalar().ToString();
+                    }
+                    catch (Exception ex) { error = ex.Message; }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    _con.Close();
+                }
+
+                if (username != string.Empty)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
-                        return Redirect(returnUrl);
+                        var requestResponce = OAuthServiceBase.Instance.RequestToken();
+                        return View("Success", accessResponse);
                     }
                     else
                     {
@@ -59,8 +86,9 @@ namespace hi5_auth.Controllers
 
         public ActionResult LogOff()
         {
+            Response.Cookies.Clear();
             FormsAuthentication.SignOut();
-
+            Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
@@ -165,7 +193,7 @@ namespace hi5_auth.Controllers
 
             JObject jsonUserInfo = JObject.Parse(JsonResult);
 
-            string username = jsonUserInfo.Value<string>("username");
+            string username = jsonUserInfo.Value<string>("email");
             string email = jsonUserInfo.Value<string>("email");
             string locale = jsonUserInfo.Value<string>("locale");
             int facebook_userID = jsonUserInfo.Value<int>("id");
@@ -180,24 +208,47 @@ namespace hi5_auth.Controllers
             string password = username;
 
             // step 1, calculate MD5 hash from input
-            System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(password);
-            byte[] hash = md5.ComputeHash(inputBytes);
+            //System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
+            //byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(password);
+            //byte[] hash = md5.ComputeHash(inputBytes);
 
-            // step 2, convert byte array to hex string
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
-            {
-                sb.Append(hash[i].ToString("X2"));
-            }
+            //// step 2, convert byte array to hex string
+            //System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            //for (int i = 0; i < hash.Length; i++)
+            //{
+            //    sb.Append(hash[i].ToString("X2"));
+            //}
 
-            string hashedPassword = sb.ToString();
+            //string hashedPassword = sb.ToString();
 
             //save the user now we have all the information we need
-            MembershipCreateStatus createStatus;
-            Membership.CreateUser(username, hashedPassword, email, null, null, true, null, out createStatus);
+            //MembershipCreateStatus createStatus;
+            //Membership.CreateUser(username, hashedPassword, email, null, null, true, null, out createStatus);
+            MySqlConnection _con = new MySqlConnection("server=localhost;user id=root;password=imba;database=hi5;port=3307;");
+            string error = "";
+            try
+            {
+                _con.Open();
+                MySqlCommand _command = new MySqlCommand("call spInsertUser('" + username + "','" + password + "','" + email + "')", _con);
 
-            if (createStatus == MembershipCreateStatus.Success)
+                try
+                {
+                    _command.ExecuteScalar().ToString();
+                }
+                catch (Exception ex) { error = ex.Message; }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _con.Close();
+            }
+
+
+
+            /*if (createStatus == MembershipCreateStatus.Success)
             {
                 //use the facebook email for our auth cookie
                 FormsAuthentication.SetAuthCookie(email, false);
@@ -206,6 +257,18 @@ namespace hi5_auth.Controllers
             else
             {
                 ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                return RedirectToAction("LogOn", "Account");
+            }*/
+
+           
+            if (!String.IsNullOrEmpty(email) && error!="")
+            {
+                FormsAuthentication.SetAuthCookie(email, false);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "gwapo ko");
                 return RedirectToAction("LogOn", "Account");
             }
         }

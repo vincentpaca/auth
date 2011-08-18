@@ -37,10 +37,11 @@ namespace hi5_auth.OAuth
         {
             // This should go out to a DB and get the users saved information.
             //var hash = (requestToken + userName).ToSHA1();
-            MySqlConnection _con = new MySqlConnection("server=localhost;user id=root;password=imba;database=hi5;port=3307;");
+            MySqlConnection _con = new MySqlConnection("Server=localhost; Port=3307; Database=hi5; Uid=root; Pwd=imba;");
             try {
                 _con.Open();
-                MySqlCommand _command = new MySqlCommand("call spGetAccessToken('" + requestToken + "','" + userName + "')", _con);
+                MySqlCommand _command = new MySqlCommand("update users set token = '" + requestToken + "' where username = '" + userName + "';" +
+                                             "select `password` from users where username = '" + userName + "';", _con);
                 string hash = "";
                 try
                 {

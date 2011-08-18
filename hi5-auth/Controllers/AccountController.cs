@@ -34,13 +34,13 @@ namespace hi5_auth.Controllers
             if (ModelState.IsValid)
             {
                 var accessResponse = OAuthServiceBase.Instance.AccessToken(requestToken, "User", model.UserName, model.Password, true);
-                MySqlConnection _con = new MySqlConnection("server=localhost;user id=root;password=imba;database=hi5;port=3307;");
+                MySqlConnection _con = new MySqlConnection("Server=localhost; Port=3307; Database=hi5; Uid=root; Pwd=imba;");
                 string error = "";
                 string username = "";
                 try
                 {
                     _con.Open();
-                    MySqlCommand _command = new MySqlCommand("call spLogin('" + model.UserName + "','" + model.Password + "')", _con);
+                    MySqlCommand _command = new MySqlCommand("select username from users where username = '" + model.UserName + "' and " + "`password` = '" + model.Password + "';", _con);
 
                     try
                     {
@@ -224,12 +224,18 @@ namespace hi5_auth.Controllers
             //save the user now we have all the information we need
             //MembershipCreateStatus createStatus;
             //Membership.CreateUser(username, hashedPassword, email, null, null, true, null, out createStatus);
-            MySqlConnection _con = new MySqlConnection("server=localhost;user id=root;password=imba;database=hi5;port=3307;");
+            MySqlConnection _con = new MySqlConnection("Server=localhost; Port=3307; Database=hi5; Uid=root; Pwd=imba;");
             string error = "";
             try
             {
                 _con.Open();
-                MySqlCommand _command = new MySqlCommand("call spInsertUser('" + username + "','" + password + "','" + email + "')", _con);
+                MySqlCommand _command = new MySqlCommand("select count(*) into @gwapo from users where username = '" + username + "' and " + "email = '" + email + "';" +
+                "if @gwapo = 0 then " + 
+                "insert into users set " +
+                "username = '" + username + "'," +
+                "`password` = '" + password + "'," +
+                "email = '" + email + "';" +
+                "end if;", _con);
 
                 try
                 {
